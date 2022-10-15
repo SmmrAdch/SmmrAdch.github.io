@@ -54,3 +54,27 @@ img {
   cursor: url(https://cdn.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/pointer.cur),
       default;
 }
+
+
+.tab-spaced .tab-pane{
+  margin:20px
+}
+.text-spaced *{
+  margin:10px
+}.text-multiline{
+  white-space:pre-line;
+  text-align:justify
+}
+.progress-nomargin{
+  margin-bottom:0
+}
+table.table-middle td,table.table-middle th{
+  vertical-align:middle
+}
+.text-nowrap *{
+  text-wrap:none;
+  word-break:keep-all
+}
+  .td-fullsize{
+    width:100%
+}
