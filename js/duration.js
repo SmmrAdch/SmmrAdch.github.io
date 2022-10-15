@@ -34,7 +34,7 @@
 jQuery(document).ready(function($) {
     $("body").click(function(e) {
         var a = new Array
-        ("富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善");
+        ("白羽 蘇芳", "花菱 立花", "匂坂 マユリ", "八重垣 えりか", "小御門 ネリネ", "沙沙貴 苺", "沙沙貴 林檎", "八代 譲葉", "考崎 千鳥");
         var $i = $("<span/>").text(a[a_idx]);
         a_idx = (a_idx + 1) % a.length;
         var x = e.pageX,
