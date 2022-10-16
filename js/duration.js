@@ -22,7 +22,7 @@
       if(String(snum).length === 1 ){
         snum = "0" + snum;
       }
-      document.getElementById("timeDate").innerHTML = "本站安全运行&nbsp"+dnum+"&nbsp天";
+      document.getElementById("timeDate").innerHTML = "本站居然运行了&nbsp"+dnum+"&nbsp天";
       document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";
     }
   
@@ -34,7 +34,7 @@
 jQuery(document).ready(function($) {
     $("body").click(function(e) {
         var a = new Array
-        ("白羽 蘇芳", "花菱 立花", "匂坂 マユリ", "八重垣 えりか", "小御門 ネリネ", "沙沙貴 苺", "沙沙貴 林檎", "八代 譲葉", "考崎 千鳥");
+        ("TuT", "(　ﾟ∀ﾟ) ﾉ♡", "ヽ(`Д´)ノ", "(☍﹏⁰)", "( ´•̥×•̥` )", "ΩДΩ", "(・ω・)", "ヾ(´︶`*)ﾉ♬", "(❀╹◡╹)");
         var $i = $("<span/>").text(a[a_idx]);
         a_idx = (a_idx + 1) % a.length;
         var x = e.pageX,
@@ -71,12 +71,12 @@ function delay() {
  document.addEventListener('visibilitychange', function () {
      if (document.hidden) {
          $('[rel="icon"]').attr('href', "/img/fluid.png");
-         document.title = '( •︠ˍ•︡ )你丑你就走！';
+         document.title = '看不到我~';
          clearTimeout(titleTime);
      }
      else {
          $('[rel="icon"]').attr('href', "/img/1.png");
-         document.title = '(◍•ᴗ•◍)你帅就回来！' + OriginTitle;
+         document.title = '欢迎回来~' + OriginTitle;
          titleTime = setTimeout(function () {
              document.title = OriginTitle;
          }, 2000);
