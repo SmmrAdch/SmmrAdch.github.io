@@ -21,13 +21,13 @@
     <meta name="description" content="前言 去年用WordPress在腾讯云上搭建了我的第一个blog，后来因为疏于管理，导致年久失修最终关闭了。最近打算重新搭建一个自己在互联网的小窝，于是采用了Hexo + GitHub Pages搭建，主题使用Fluid。 这里记录一下我自己搭建与魔改（照搬他人）blog的步骤，日后查找起来也方便。 搭建blog 准备工作 (1)需要有一个GitHub账号，没有可以去官网注册一个 (2)电脑安装G">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo-Fluid搭建与魔改纪录">
-<meta property="og:url" content="https://smmradch.top/2022/10/19/Hexo-Fluid%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AD%94%E6%94%B9%E7%BA%AA%E5%BD%95/index.html">
+<meta property="og:url" content="https://smmradch.top/2022/10/18/Hexo-Fluid%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AD%94%E6%94%B9%E7%BA%AA%E5%BD%95/index.html">
 <meta property="og:site_name" content="千鸟的小站">
 <meta property="og:description" content="前言 去年用WordPress在腾讯云上搭建了我的第一个blog，后来因为疏于管理，导致年久失修最终关闭了。最近打算重新搭建一个自己在互联网的小窝，于是采用了Hexo + GitHub Pages搭建，主题使用Fluid。 这里记录一下我自己搭建与魔改（照搬他人）blog的步骤，日后查找起来也方便。 搭建blog 准备工作 (1)需要有一个GitHub账号，没有可以去官网注册一个 (2)电脑安装G">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pic1.imgdb.cn/item/634ecfb116f2c2beb18225c7.png">
-<meta property="article:published_time" content="2022-10-18T16:03:46.000Z">
-<meta property="article:modified_time" content="2022-10-18T16:09:12.701Z">
+<meta property="article:published_time" content="2022-10-18T15:53:46.000Z">
+<meta property="article:modified_time" content="2022-10-19T15:09:32.321Z">
 <meta property="article:author" content="Smmr Adch">
 <meta property="article:tag" content="blog">
 <meta property="article:tag" content="hexo">
@@ -247,8 +247,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-19 00:03" pubdate>
-          2022年10月19日 凌晨
+        <time datetime="2022-10-18 23:53" pubdate>
+          2022年10月18日 晚上
         </time>
       </span>
     
@@ -369,15 +369,15 @@
 <h3 id="域名解析">域名解析</h3>
 <p>我是在腾讯云购买的域名，所以在这里以腾讯云为例</p>
 <p>点击<code>控制台</code>，进入<code>域名注册-&gt;我的域名</code>,点击<code>解析</code>，<code>添加记录</code></p>
-<img src="/2022/10/19/Hexo-Fluid%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AD%94%E6%94%B9%E7%BA%AA%E5%BD%95/2.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2022/10/18/Hexo-Fluid%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AD%94%E6%94%B9%E7%BA%AA%E5%BD%95/2.png" srcset="/img/loading.gif" lazyload class="">
 <p>（这里的记录值填自己blog的ip地址，不清楚可以去ping一下）</p>
-<img src="/2022/10/19/Hexo-Fluid%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AD%94%E6%94%B9%E7%BA%AA%E5%BD%95/3.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2022/10/18/Hexo-Fluid%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AD%94%E6%94%B9%E7%BA%AA%E5%BD%95/3.png" srcset="/img/loading.gif" lazyload class="">
 <p>在博客目录 <code>/source</code>下创建一个名为<code>CNAME</code>的文件，在文件内写入你的域名（不要加<code>https://</code>和<code>www.</code>）</p>
 <p>输入指令</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">hexo g</span><br><span class="hljs-attribute">hexo d</span><br></code></pre></td></tr></table></figure>
 <h3 id="Github解析">Github解析</h3>
 <p>在Github的xxx.github.io项目,进入<code>Settings</code>,在<code>Pages</code>下的<code>Custom domain</code>功能中,将刚刚申请的域名写进去。</p>
-<img src="/2022/10/19/Hexo-Fluid%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AD%94%E6%94%B9%E7%BA%AA%E5%BD%95/1.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2022/10/18/Hexo-Fluid%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AD%94%E6%94%B9%E7%BA%AA%E5%BD%95/1.png" srcset="/img/loading.gif" lazyload class="">
 <p>设置好后，等待一段时间后，就可以通过域名访问blog了</p>
 <h2 id="Fluid魔改">Fluid魔改</h2>
 <h3 id="字体样式修改">字体样式修改</h3>
@@ -452,7 +452,7 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!--动态线条背景--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span></span><br><span class="hljs-tag"><span class="hljs-attr">color</span>=<span class="hljs-string">&quot;220,220,220&quot;</span> <span class="hljs-attr">opacity</span>=<span class="hljs-string">&#x27;0.7&#x27;</span> <span class="hljs-attr">zIndex</span>=<span class="hljs-string">&quot;-2&quot;</span> <span class="hljs-attr">count</span>=<span class="hljs-string">&quot;200&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>目前的改动就这些，以后有时间再做一下~</p>
 <p>没有几张图片是因为懒~</p>
-<img src="/2022/10/19/Hexo-Fluid%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AD%94%E6%94%B9%E7%BA%AA%E5%BD%95/4.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2022/10/18/Hexo-Fluid%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AD%94%E6%94%B9%E7%BA%AA%E5%BD%95/4.png" srcset="/img/loading.gif" lazyload class="">
                 
               </div>
             
@@ -502,7 +502,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Hexo-Fluid搭建与魔改纪录</div>
-      <div>https://smmradch.top/2022/10/19/Hexo-Fluid搭建与魔改纪录/</div>
+      <div>https://smmradch.top/2022/10/18/Hexo-Fluid搭建与魔改纪录/</div>
     </div>
     <div class="license-meta">
       
@@ -514,7 +514,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月19日</div>
+          <div>2022年10月18日</div>
         </div>
       
       
