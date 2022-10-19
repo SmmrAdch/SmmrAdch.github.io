@@ -1,0 +1,846 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta name="google-site-verification" content="xcAlYlUA-AaOMZZwHqQEfLDIz2Z6_zzgiLlB5_m9kWs" />
+  <meta name="baidu-site-verification" content="code-j3boywevA1" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="rgba(46,184,46,0.2)">
+  <meta name="author" content="Smmr Adch">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="海伦一直使用在线约会网站寻找合适自己的约会对象。经过一番总结，她发现曾交往过三种类型的人：   不喜欢的人   魅力一般的人   极具魅力的人   尽管发现了上述规律，但海伦依然无法将约会网站推荐的匹配对象归入恰当的分类。海伦希望我们的分类软件可以更好地帮助她将匹配对象划分到确切的分类中。此外她收集到了一些约会网站未曾记录的数据信息，这更有助于匹配对象的归类。 准备数据 数据存放在文本文件dati">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用k近邻算法改进约会网站的匹配效果">
+<meta property="og:url" content="https://smmradch.top/2022/10/19/%E4%BD%BF%E7%94%A8k%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95%E6%94%B9%E8%BF%9B%E7%BA%A6%E4%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E5%8C%B9%E9%85%8D%E6%95%88%E6%9E%9C/index.html">
+<meta property="og:site_name" content="千鸟的小站">
+<meta property="og:description" content="海伦一直使用在线约会网站寻找合适自己的约会对象。经过一番总结，她发现曾交往过三种类型的人：   不喜欢的人   魅力一般的人   极具魅力的人   尽管发现了上述规律，但海伦依然无法将约会网站推荐的匹配对象归入恰当的分类。海伦希望我们的分类软件可以更好地帮助她将匹配对象划分到确切的分类中。此外她收集到了一些约会网站未曾记录的数据信息，这更有助于匹配对象的归类。 准备数据 数据存放在文本文件dati">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635011ed16f2c2beb1f1248e.png">
+<meta property="article:published_time" content="2022-10-19T14:59:48.000Z">
+<meta property="article:modified_time" content="2022-10-19T15:02:13.752Z">
+<meta property="article:author" content="Smmr Adch">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="k近邻">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pic1.imgdb.cn/item/635011ed16f2c2beb1f1248e.png">
+  
+  
+  
+  <title>使用k近邻算法改进约会网站的匹配效果 - 千鸟的小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.15.6/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"smmradch.top","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"836f6f28c63865df95ede772aff85276","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"pm5yyO8YunQZvONjYdqGHe9C-MdYXbMMI","app_key":"2tS49c6rlEo7ZDN2MREanI54","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?836f6f28c63865df95ede772aff85276";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>千鸟的小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="使用k近邻算法改进约会网站的匹配效果"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-19 22:59" pubdate>
+          2022年10月19日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          44 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">使用k近邻算法改进约会网站的匹配效果</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>海伦一直使用在线约会网站寻找合适自己的约会对象。经过一番总结，她发现曾交往过三种类型的人：</p>
+<ul>
+<li>
+<p>不喜欢的人</p>
+</li>
+<li>
+<p>魅力一般的人</p>
+</li>
+<li>
+<p>极具魅力的人</p>
+</li>
+</ul>
+<p>尽管发现了上述规律，但海伦依然无法将约会网站推荐的匹配对象归入恰当的分类。海伦希望我们的分类软件可以更好地帮助她将匹配对象划分到确切的分类中。此外她收集到了一些约会网站未曾记录的数据信息，这更有助于匹配对象的归类。</p>
+<h2 id="准备数据">准备数据</h2>
+<p>数据存放在文本文件<code>datingTestSet.txt</code>中，每个样本数据占据一行，共1000行。样本主要包含以下三种特征：</p>
+<ul>
+<li>
+<p>每年获得的飞行常客里程数</p>
+</li>
+<li>
+<p>玩视频游戏所耗时间百分比</p>
+</li>
+<li>
+<p>每周消费的冰激凌公升数</p>
+</li>
+</ul>
+<p>首先，我们要将待处理数据的格式改为分类器可以接受的格式。在<code>kNN.py</code>中创建名为<code>file2matrix</code>的函数。该函数输入为文件名字符串，输出为训练样本矩阵和类标签向量。</p>
+<p><code>file2matrix</code>的函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">file2matrix</span>(<span class="hljs-params">filename</span>):<br>    fr = <span class="hljs-built_in">open</span>(filename)<br>    arrayOLines = fr.readlines()<br>    numberOfLines = <span class="hljs-built_in">len</span>(arrayOLines) <span class="hljs-comment">#得到文件行数</span><br>    returnMat = zeros((numberOfLines, <span class="hljs-number">3</span>)) <span class="hljs-comment">#创建返回的NumPy矩阵</span><br>    classLabelVector = []<br>    index = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> arrayOLines:<br>        line = line.strip()   <span class="hljs-comment">#移除字符串头尾的空格或换行符</span><br>        listFromLine = line.split(<span class="hljs-string">&#x27;\t&#x27;</span>)  <span class="hljs-comment">#移除字符串头尾的制表符</span><br>        returnMat[index, :] = listFromLine[<span class="hljs-number">0</span>:<span class="hljs-number">3</span>]   <span class="hljs-comment">#解析文件数据到列表</span><br>        <span class="hljs-keyword">if</span> listFromLine[-<span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;didntLike&#x27;</span>:   <br>            classLabelVector.append(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">elif</span> listFromLine[-<span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;smallDoses&#x27;</span>:<br>            classLabelVector.append(<span class="hljs-number">2</span>)<br>        <span class="hljs-keyword">elif</span> listFromLine[-<span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;largeDoses&#x27;</span>:<br>            classLabelVector.append(<span class="hljs-number">3</span>)<br>        index += <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> returnMat, classLabelVector<br></code></pre></td></tr></table></figure>
+<p>在Python命令提示符下输入下面命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">reload(kNN)<br>datingDataMat, datingLabels = kNN.file2matrix(<span class="hljs-string">&#x27;datingTestSet.txt&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p>现在已经从文本文件里导入了数据，并将其格式化为想要的格式，接着我们要了解数据的真实含义。</p>
+<p>我们使用<code>Matplotlib</code>创建散点图展示数据内容。</p>
+<h2 id="分析数据">分析数据</h2>
+<p>在Python命令提示符下输入下面命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br>fig = plt.figure()<br>ax = fig.add_subplot(<span class="hljs-number">111</span>)<br><span class="hljs-comment"># scatter函数支持个性化散点图上的点</span><br>ax.scatter(datingDataMat[:, <span class="hljs-number">1</span>], datingDataMat[:, <span class="hljs-number">2</span>], <span class="hljs-number">15.0</span>*array(datingLabels), <span class="hljs-number">15.0</span>*array(datingLabels))<br>plt.show()<br></code></pre></td></tr></table></figure>
+<p>figure()函数的参数说明：</p>
+<blockquote>
+<p>figure(num=None, figsize=None, dpi=None, facecolor=None, edgecolor=None, frameon=True)</p>
+<p>num:图像编号或名称，数字为编号 ，字符串为名称</p>
+<p>figsize:指定figure的宽和高，单位为英寸</p>
+<p>dpi:参数指定绘图对象的分辨率</p>
+<p>facecolor:背景颜色</p>
+<p>edgecolor:边框颜色</p>
+<p>frameon:是否显示边框</p>
+</blockquote>
+<p>add_subplot ()函数参数说明：</p>
+<blockquote>
+<p>返回axes实例:</p>
+<p>参数1：子位图总行数</p>
+<p>参数2：子位图总列数</p>
+<p>参数3：子位图所在位置</p>
+</blockquote>
+<p>输出效果如下图所示</p>
+<img src="/2022/10/19/%E4%BD%BF%E7%94%A8k%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95%E6%94%B9%E8%BF%9B%E7%BA%A6%E4%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E5%8C%B9%E9%85%8D%E6%95%88%E6%9E%9C/1.png" srcset="/img/loading.gif" lazyload class="">
+<p>我们可以从上图中看到数据点所属三个样本分类的区域轮廓。</p>
+<h2 id="准备数据-2">准备数据</h2>
+<p>下面给出两组数据：</p>
+<table>
+<thead>
+<tr>
+<th>玩视频游戏所耗时间百分比</th>
+<th>每年获得的飞行常客里程数</th>
+<th>每周消费的冰淇淋公升数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>67</td>
+<td>32000</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>20000</td>
+<td>1.1</td>
+</tr>
+</tbody>
+</table>
+<p>我们很容易发现，在使用</p>
+<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msqrt><mrow><mo stretchy="false">(</mo><mn>0</mn><mo>−</mo><mn>67</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>+</mo><mo stretchy="false">(</mo><mn>20000</mn><mo>−</mo><mn>32000</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>+</mo><mo stretchy="false">(</mo><mn>1.1</mn><mo>−</mo><mn>0.1</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow></msqrt></mrow><annotation encoding="application/x-tex">\sqrt{(0-67)^2+(20 000-32 000)^2+(1.1-0.1)^2}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.24em;vertical-align:-0.2561em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9839em;"><span class="svg-align" style="top:-3.2em;"><span class="pstrut" style="height:3.2em;"></span><span class="mord" style="padding-left:1em;"><span class="mopen">(</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">67</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mopen">(</span><span class="mord">20000</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">32000</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mopen">(</span><span class="mord">1.1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">0.1</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-2.9439em;"><span class="pstrut" style="height:3.2em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.28em;"><svg xmlns="http://www.w3.org/2000/svg" width='400em' height='1.28em' viewBox='0 0 400000 1296' preserveAspectRatio='xMinYMin slice'><path d='M263,681c0.7,0,18,39.7,52,119
+c34,79.3,68.167,158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120
+c340,-704.7,510.7,-1060.3,512,-1067
+l0 -0
+c4.7,-7.3,11,-11,19,-11
+H40000v40H1012.3
+s-271.3,567,-271.3,567c-38.7,80.7,-84,175,-136,283c-52,108,-89.167,185.3,-111.5,232
+c-22.3,46.7,-33.8,70.3,-34.5,71c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1
+s-109,-253,-109,-253c-72.7,-168,-109.3,-252,-110,-252c-10.7,8,-22,16.7,-34,26
+c-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26s76,-59,76,-59s76,-60,76,-60z
+M1001 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2561em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p>方法计算时，上面方程中数字差值最大的属性对计算结果的影响最大。产生这种现象的唯一原因，仅仅是因为飞行常客里程数远大于其他特征值。但海伦认为这三种特征时同等重要的，所以飞行常客里程数并不应该如此严重的影响到计算结果。</p>
+<p>在处理这种不同取值范围的特征值时，我们通常采用数值归一化的方法，如将取值范围处理为0到1或者-1到1之间。下面的公式可以将任意取值范围的特征值转化为0到1区间内的值：</p>
+<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>n</mi><mi>e</mi><mi>w</mi><mi>V</mi><mi>a</mi><mi>l</mi><mi>u</mi><mi>e</mi><mo>=</mo><mo stretchy="false">(</mo><mi>o</mi><mi>l</mi><mi>d</mi><mi>V</mi><mi>a</mi><mi>l</mi><mi>u</mi><mi>e</mi><mo>−</mo><mi>m</mi><mi>i</mi><mi>n</mi><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mo stretchy="false">(</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>−</mo><mi>m</mi><mi>i</mi><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">newValue=(oldValue-min)/(max-min)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">Va</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">d</span><span class="mord mathnormal">Va</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">min</span><span class="mclose">)</span><span class="mord">/</span><span class="mopen">(</span><span class="mord mathnormal">ma</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">min</span><span class="mclose">)</span></span></span></span></span></p>
+<p>我们在文件<code>kNN.py</code>中增加一个新函数<code>autoNorm()</code>进行归一化特征值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">autoNorm</span>(<span class="hljs-params">dataSet</span>):<br>    minVals = dataSet.<span class="hljs-built_in">min</span>(<span class="hljs-number">0</span>)<br>    maxVals = dataSet.<span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>)<br>    ranges = maxVals - minVals<br>    normDataSet = zeros(shape(dataSet))<br>    m = dataSet.shape[<span class="hljs-number">0</span>]<br>    <span class="hljs-comment"># 特征值矩阵有1000*3个值，而minVals和ranges的值都为1*3，故需要用tile()函数将变量内容复制成输入矩阵同样大小的矩阵</span><br>    normDataSet = dataSet - tile(minVals, (m, <span class="hljs-number">1</span>))<br>    normDataSet = normDataSet / tile(ranges, (m, <span class="hljs-number">1</span>)) <span class="hljs-comment"># 特征值相除而不是矩阵相除</span><br>    <span class="hljs-keyword">return</span> normDataSet, ranges, minVals<br></code></pre></td></tr></table></figure>
+<h2 id="测试算法">测试算法</h2>
+<p>原始kNN分类函数<code>classify0()</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">classify0</span>(<span class="hljs-params">inX, dataSet, labels, k</span>):<br>    dataSetSize = dataSet.shape[<span class="hljs-number">0</span>]<br>    diffMat = tile(inX, (dataSetSize, <span class="hljs-number">1</span>)) - dataSet<br>    sqDiffMat = diffMat ** <span class="hljs-number">2</span><br>    sqDistances = sqDiffMat.<span class="hljs-built_in">sum</span>(axis = <span class="hljs-number">1</span>)<br>    distances = sqDistances ** <span class="hljs-number">0.5</span><br>    sortedDistIndicies = distances.argsort() <br>    classCount = &#123;&#125;<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(k):<br>        voteIlabel = labels[sortedDistIndicies[i]]<br>        classCount[voteIlabel] = classCount.get(voteIlabel, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>   <br>    sortedClassCount = <span class="hljs-built_in">sorted</span>(classCount.items(),key = operator.itemgetter(<span class="hljs-number">1</span>), reverse = <span class="hljs-literal">True</span>)<br>    <span class="hljs-keyword">return</span> sortedClassCount[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
+<p>我们现在来测试一下分类器的效果</p>
+<p>为了测试分类器效果，在<code>kNN.py</code>文件中创建函数<code>datingClassTest</code>，该函数是自包含。</p>
+<p>在<code>kNN.py</code>文件中输入下面的程序代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">datingClassTest</span>():<br>    hoRatio = <span class="hljs-number">0.10</span><br>    datingDataMat, datingLabels = file2matrix(<span class="hljs-string">&#x27;datingTestSet.txt&#x27;</span>)<br>    normMat, ranges, minVals = autoNorm(datingDataMat)<br>    m = normMat.shape[<span class="hljs-number">0</span>]<br>    numTestVecs = <span class="hljs-built_in">int</span>(m * hoRatio)<br>    errorCount = <span class="hljs-number">0.0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(numTestVecs):<br>        classifierResult = classify0(normMat[i, :], normMat[numTestVecs:m, :], datingLabels[numTestVecs:m], <span class="hljs-number">3</span>)<br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&quot;the classifier came back with: %d, the real answer is: %d&quot;</span>% (classifierResult, datingLabels[i]))<br>        <span class="hljs-keyword">if</span> (classifierResult != datingLabels[i]): errorCount += <span class="hljs-number">1.0</span><br>    <span class="hljs-built_in">print</span> (<span class="hljs-string">&quot;the total error rate is: %f&quot;</span>% (errorCount/<span class="hljs-built_in">float</span>(numTestVecs)))<br></code></pre></td></tr></table></figure>
+<p>此段代码首先使用了<code>file2matrix()</code>和<code>autoNorm()</code>函数从文件中读取并将其转化为归一化特征值</p>
+<p>接着计算测试向量的数量，此步决定了<code>normMat</code>向量中哪些数据用于测试，哪些数据用于分类器的训练样本</p>
+<p>然后将两部分数据输入到原始kNN分类函数<code>classify0</code>中</p>
+<p>最后计算错误率并输出结果。</p>
+<p>在Python命令提示符下重新加载kNN模块，并输入<code>kNN.datingClassTest()</code>，我们将得到下面的输出结果：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-keyword">the</span> classifier came <span class="hljs-keyword">back</span> <span class="hljs-keyword">with</span>: <span class="hljs-number">3</span>, <span class="hljs-keyword">the</span> <span class="hljs-built_in">real</span> answer <span class="hljs-keyword">is</span>: <span class="hljs-number">3</span><br><span class="hljs-keyword">the</span> classifier came <span class="hljs-keyword">back</span> <span class="hljs-keyword">with</span>: <span class="hljs-number">2</span>, <span class="hljs-keyword">the</span> <span class="hljs-built_in">real</span> answer <span class="hljs-keyword">is</span>: <span class="hljs-number">2</span><br>.<br>.<br><span class="hljs-keyword">the</span> classifier came <span class="hljs-keyword">back</span> <span class="hljs-keyword">with</span>: <span class="hljs-number">1</span>, <span class="hljs-keyword">the</span> <span class="hljs-built_in">real</span> answer <span class="hljs-keyword">is</span>: <span class="hljs-number">1</span><br><span class="hljs-keyword">the</span> classifier came <span class="hljs-keyword">back</span> <span class="hljs-keyword">with</span>: <span class="hljs-number">3</span>, <span class="hljs-keyword">the</span> <span class="hljs-built_in">real</span> answer <span class="hljs-keyword">is</span>: <span class="hljs-number">3</span><br><span class="hljs-keyword">the</span> classifier came <span class="hljs-keyword">back</span> <span class="hljs-keyword">with</span>: <span class="hljs-number">3</span>, <span class="hljs-keyword">the</span> <span class="hljs-built_in">real</span> answer <span class="hljs-keyword">is</span>: <span class="hljs-number">3</span><br><span class="hljs-keyword">the</span> classifier came <span class="hljs-keyword">back</span> <span class="hljs-keyword">with</span>: <span class="hljs-number">2</span>, <span class="hljs-keyword">the</span> <span class="hljs-built_in">real</span> answer <span class="hljs-keyword">is</span>: <span class="hljs-number">2</span><br><span class="hljs-keyword">the</span> classifier came <span class="hljs-keyword">back</span> <span class="hljs-keyword">with</span>: <span class="hljs-number">1</span>, <span class="hljs-keyword">the</span> <span class="hljs-built_in">real</span> answer <span class="hljs-keyword">is</span>: <span class="hljs-number">1</span><br><span class="hljs-keyword">the</span> classifier came <span class="hljs-keyword">back</span> <span class="hljs-keyword">with</span>: <span class="hljs-number">3</span>, <span class="hljs-keyword">the</span> <span class="hljs-built_in">real</span> answer <span class="hljs-keyword">is</span>: <span class="hljs-number">1</span><br><span class="hljs-keyword">the</span> total <span class="hljs-keyword">error</span> rate <span class="hljs-keyword">is</span>: <span class="hljs-number">0.050000</span><br></code></pre></td></tr></table></figure>
+<p>分类器处理约会数据集的错误率是5%，这是个不错的结果。我们可以改变函数<code>datingClassTest</code>内变量<code>hoRatio</code>和变量<code>k</code>的值，检测错误率是否随着变量值的变化而增加。</p>
+<p>至此，我们可以正确的预测分类了。</p>
+<h2 id="使用算法">使用算法</h2>
+<p>上面我们已经做了测试，现在我们给海伦一小段程序对人们分类。</p>
+<p>将下列代码加入到<code>kNN.py</code>并重新载入<code>kNN</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">classifyPerson</span>():<br>    resultList = [<span class="hljs-string">&#x27;not at all&#x27;</span>, <span class="hljs-string">&#x27;in small doses&#x27;</span>, <span class="hljs-string">&#x27;in large doses&#x27;</span>]<br>    <span class="hljs-comment"># 我们需要告诉解释器变量为float，否则Python语言会把这些元素当作字符串处理</span><br>    percentTats = <span class="hljs-built_in">float</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;percentage of time spent playing video games?&quot;</span>))<br>    ffMiles = <span class="hljs-built_in">float</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;frequent flier miles earned per year?&quot;</span>))<br>    iceCream = <span class="hljs-built_in">float</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;liters of ice cream consumed per year?&quot;</span>))<br>    datingDataMat, datingLabels = file2matrix(<span class="hljs-string">&#x27;datingTestSet.txt&#x27;</span>)<br>    normMat, ranges, minVals = autoNorm(datingDataMat)<br>    inArr = array([ffMiles, percentTats, iceCream])<br>    classifierResult = classify0((inArr - minVals)/ranges, normMat, datingLabels, <span class="hljs-number">3</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;You will probably like this person: &quot;</span>, resultList[classifierResult - <span class="hljs-number">1</span>])<br></code></pre></td></tr></table></figure>
+<p>代码实际运行的效果如下</p>
+<img src="/2022/10/19/%E4%BD%BF%E7%94%A8k%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95%E6%94%B9%E8%BF%9B%E7%BA%A6%E4%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E5%8C%B9%E9%85%8D%E6%95%88%E6%9E%9C/2.png" srcset="/img/loading.gif" lazyload class="">
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98/" class="category-chain-item">机器学习实战</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+        <a href="/tags/k%E8%BF%91%E9%82%BB/">#k近邻</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>使用k近邻算法改进约会网站的匹配效果</div>
+      <div>https://smmradch.top/2022/10/19/使用k近邻算法改进约会网站的匹配效果/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Smmr Adch</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月19日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/19/Hexo-Fluid%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%AD%94%E6%94%B9%E7%BA%AA%E5%BD%95/" title="Hexo-Fluid搭建与魔改纪录">
+                        <span class="hidden-mobile">Hexo-Fluid搭建与魔改纪录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.17/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"pm5yyO8YunQZvONjYdqGHe9C-MdYXbMMI","appKey":"2tS49c6rlEo7ZDN2MREanI54","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> <a href="https://icp.gov.moe/?keyword=20220195" target="_blank"><img src="/img/icon20.png" srcset="/img/loading.gif" lazyload height="20" width="20"/>萌ICP备20220195号</a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/duration.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"lift","width":170,"height":340},"mobile":{"show":false},"react":{"opacity":0.8},"log":false});</script></body>
+</html>
+
+<!--单击显示文字-->
+<script type="text/javascript" src="/js/click_show_text.js"></script>
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
