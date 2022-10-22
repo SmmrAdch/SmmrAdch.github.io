@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>正则表达式</title>
+    <link href="/2022/10/22/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    <url>/2022/10/22/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+    
+    <content type="html"><![CDATA[<p>正则表达式是对字符串和特殊字符操作的一种逻辑公式，通常被用于检索、替换符合某个模式规则的文本。</p><h2 id="基础字符">基础字符</h2><table><thead><tr><th>字符</th><th>含义</th></tr></thead><tbody><tr><td>\d</td><td>数字(0~9)</td></tr><tr><td>\D</td><td>除数字(0~9)外</td></tr><tr><td>\w</td><td>字母、数字、下划线</td></tr><tr><td>\W</td><td>除字母、数字、下划线以外</td></tr><tr><td>\s</td><td>空格、换行符、制表符</td></tr><tr><td>\S</td><td>除空格、换行符、制表符以外</td></tr></tbody></table><h2 id="基础符号">基础符号</h2><table><thead><tr><th>符号</th><th>功能</th></tr></thead><tbody><tr><td>&amp;</td><td>匹配文本</td></tr><tr><td>&amp;|&amp;</td><td>匹配多个表达式中任意一个表达式第一次出现的文本</td></tr><tr><td>(&amp;)?</td><td>括号中表达式可以匹配零次或一次</td></tr><tr><td>(&amp;)*</td><td>括号中表达式可以匹配零次或多次</td></tr><tr><td>(&amp;)+</td><td>括号中表达式可以匹配一次或多次</td></tr><tr><td>(&amp;){n}</td><td>括号中表达式需要匹配n次</td></tr><tr><td>(&amp;){n,m}</td><td>括号中表达式需要匹配n~m次</td></tr><tr><td>(&amp;){n,}</td><td>括号中表达式需要匹配至少n次</td></tr><tr><td>(&amp;){,m}</td><td>括号中表达式需要匹配最多m次</td></tr><tr><td>?</td><td>改为获取最短的匹配文本</td></tr><tr><td>[&amp;]</td><td>自定义分类</td></tr><tr><td>[^&amp;]</td><td>自定义分类的非</td></tr><tr><td>^</td><td>文本必须以表达式开始</td></tr><tr><td>$</td><td>文本必须以表达式结束</td></tr><tr><td>^$</td><td>文本必须完全符合表达式</td></tr><tr><td>.</td><td>匹配换行以外的所有字符</td></tr><tr><td>.*</td><td>任意文本</td></tr><tr><td>(&amp; )</td><td>表达式分组</td></tr></tbody></table><p><a href="https://c.runoob.com/front-end/854/">正则表达式在线测试</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>杂</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>正泽表达式</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>爬虫入门</title>
     <link href="/2022/10/21/%E7%88%AC%E8%99%AB%E5%85%A5%E9%97%A8/"/>
     <url>/2022/10/21/%E7%88%AC%E8%99%AB%E5%85%A5%E9%97%A8/</url>
